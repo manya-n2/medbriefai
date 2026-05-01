@@ -102,3 +102,44 @@ const Home = () => {
           </div>
         </div>
       </section>
+       {/* 3. ANALYZE PANEL */}
+      <section id="analyze" className="analyze-section">
+        <div className="analyze-card glass">
+          <h2>Analyze Clinical Notes</h2>
+          
+          <div className="input-group">
+            <textarea 
+              placeholder="Paste doctor notes, discharge summary, prescriptions, or medical records here..."
+              value={noteText}
+              onChange={(e) => setNoteText(e.target.value)}
+            ></textarea>
+          </div>
+
+          <div className="upload-group">
+            <label className="upload-area">
+              <span className="upload-icon">📄</span>
+              <p>Drag & drop or click to upload</p>
+              <small>Accepted formats: PDF, DOCX, TXT</small>
+              <input type="file" accept=".pdf,.docx,.txt" onChange={handleFileUpload} hidden />
+            </label>
+            {uploadedFile && <div className="file-preview">File selected: {uploadedFile}</div>}
+          </div>
+
+          <div className="action-group">
+            <select 
+              className="goal-select" 
+              value={analysisGoal} 
+              onChange={(e) => setAnalysisGoal(e.target.value)}
+            >
+              <option value="Generate Summary">Generate Summary</option>
+              <option value="Detect Drug Interactions">Detect Drug Interactions</option>
+              <option value="Risk Detection">Risk Detection</option>
+              <option value="Extract Symptoms">Extract Symptoms</option>
+              <option value="Full Analysis">Full Analysis</option>
+            </select>
+            <button className="btn-analyze glow-hover" onClick={handleAnalyzeClick}>
+              Analyze
+            </button>
+          </div>
+        </div>
+      </section>
