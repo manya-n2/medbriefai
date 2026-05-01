@@ -211,6 +211,29 @@ const Home = () => {
           </div>
         </section>
       )}
+      {/* 6. FEATURES SECTION */}
+      <section id="features" className="features-section">
+        <h2 className="section-title">Platform Features</h2>
+        <div className="feature-grid">
+          {[
+            { icon: "🧠", title: "Smart Summarization", desc: "Condense long notes into key medical facts." },
+            { icon: "⚡", title: "Drug Interaction Detection", desc: "Cross-reference medications for safety." },
+            { icon: "🚨", title: "Risk Prediction", desc: "Identify high-risk patient indicators automatically." },
+            { icon: "📊", title: "Structured Outputs", desc: "Export data to EHR-friendly formats." },
+            { icon: "📝", title: "Prompt Editing", desc: "Refine AI outputs with custom medical prompts." },
+            { icon: "⏱️", title: "Faster Clinical Review", desc: "Save hours of documentation time per shift." },
+            { icon: "🤖", title: "AI-Powered Agent Workflow", desc: "Multi-step autonomous reasoning for accuracy." },
+            { icon: "🗣️", title: "Medical Language Simplification", desc: "Translate jargon for patient communication." }
+          ].map((feature, i) => (
+            <div key={i} className="feature-card glass hover-elevate">
+              <div className="feature-icon">{feature.icon}</div>
+              <h4>{feature.title}</h4>
+              <p>{feature.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* 7. HOW IT WORKS SECTION */}
       <section className="workflow-section">
         <h2 className="section-title">How It Works</h2>
@@ -223,6 +246,7 @@ const Home = () => {
           ))}
         </div>
       </section>
+
       {/* 8. ABOUT SECTION */}
       <section id="about" className="about-section glass">
         <h2>About Clinical Note Summarizer</h2>
