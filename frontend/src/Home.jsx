@@ -65,7 +65,7 @@ const Home = () => {
       <nav className="navbar glass">
         <div className="nav-brand">
           <span className="logo-icon">⚕️</span>
-          <span className="app-name">Clinical Note Summarizer</span>
+          <span className="app-name">MetBrief AI</span>
         </div>
         <div className="nav-links">
           <a href="#home">Home</a>
