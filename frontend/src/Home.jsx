@@ -159,4 +159,55 @@ const Home = () => {
           </div>
         </section>
       )}
-     
+      {/* 5. RESULTS SECTION */}
+      {showResults && (
+        <section className="results-section fade-in">
+          <h2 className="section-title">Analysis Dashboard</h2>
+          <div className="results-grid">
+            
+            <div className="result-card glass summary-card">
+              <h3>📝 Structured Summary</h3>
+              <p>{mockResults.summary}</p>
+            </div>
+
+            <div className="result-card glass">
+              <h3>⚠️ Extracted Symptoms</h3>
+              <div className="chip-container">
+                {mockResults.symptoms.map((sym, i) => <span key={i} className="chip">{sym}</span>)}
+              </div>
+            </div>
+
+            <div className="result-card glass">
+              <h3>💊 Medications</h3>
+              <div className="pill-container">
+                {mockResults.medications.map((med, i) => <span key={i} className="med-pill">{med}</span>)}
+              </div>
+            </div>
+
+            <div className="result-card glass risk-card">
+              <h3>🚨 Patient Risk Level</h3>
+              <div className={`risk-badge risk-${mockResults.riskLevel.toLowerCase()}`}>
+                {mockResults.riskLevel}
+              </div>
+            </div>
+
+            <div className="result-card glass warning-card">
+              <h3>🔗 Drug Interactions</h3>
+              <ul className="warning-list">
+                {mockResults.drugInteractions.map((interaction, i) => <li key={i}>{interaction}</li>)}
+              </ul>
+            </div>
+
+            <div className="result-card glass">
+              <h3>📋 Detected Diagnosis</h3>
+              <p className="highlight-text">{mockResults.diagnosis}</p>
+            </div>
+
+            <div className="result-card glass full-width">
+              <h3>🧠 AI Insights & Recommendations</h3>
+              <p>{mockResults.insights}</p>
+            </div>
+
+          </div>
+        </section>
+      )}
