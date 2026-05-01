@@ -1,0 +1,230 @@
+/* Note: Relies on the CSS variables defined in your Home.css 
+   (--primary-deep-blue, --primary-cyan, --glass-bg, etc.) */
+
+.interactions-page {
+  min-height: 100vh;
+  background-color: var(--primary-deep-blue);
+  color: var(--text-main);
+  padding-bottom: 4rem;
+}
+
+.interactions-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 5%;
+}
+
+.helper-text {
+  color: var(--light-gray);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* --- DRUG INPUT FORM --- */
+.add-drug-form {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.drug-input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  color: var(--primary-white);
+  font-size: 1rem;
+}
+
+.drug-input:focus {
+  outline: none;
+  border-color: var(--primary-cyan);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+}
+
+.btn-add-drug {
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid var(--primary-cyan);
+  color: var(--primary-cyan);
+  padding: 0 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-add-drug:hover {
+  background: var(--primary-cyan);
+  color: var(--primary-deep-blue);
+}
+
+/* --- DRUG CHIPS --- */
+.drug-list-container {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 1.5rem;
+  min-height: 200px;
+  margin-bottom: 2rem;
+}
+
+.drug-list-container h4 {
+  color: var(--primary-cyan);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.empty-list {
+  color: rgba(255, 255, 255, 0.3);
+  font-style: italic;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.drug-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.drug-chip {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--primary-white);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.btn-remove {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.2rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 0.2rem;
+  transition: color 0.3s;
+}
+
+.btn-remove:hover {
+  color: var(--soft-red);
+}
+
+.btn-analyze {
+  width: 100%;
+  padding: 1rem;
+  background: var(--gradient-main);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+.btn-analyze.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(100%);
+}
+
+/* --- RESULTS PANEL STYLING --- */
+.interaction-results {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border-top: 4px solid transparent;
+  overflow: hidden;
+}
+
+/* Status Colors */
+.status-danger {
+  border-top-color: var(--soft-red);
+}
+.status-danger .result-header { background: rgba(255, 77, 77, 0.1); }
+.status-danger h3 { color: var(--soft-red); }
+
+.status-warning {
+  border-top-color: #FFC107;
+}
+.status-warning .result-header { background: rgba(255, 193, 7, 0.1); }
+.status-warning h3 { color: #FFC107; }
+
+.status-safe {
+  border-top-color: #4CAF50;
+}
+.status-safe .result-header { background: rgba(76, 175, 80, 0.1); }
+.status-safe h3 { color: #4CAF50; }
+
+.result-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.status-icon {
+  font-size: 2rem;
+}
+
+.result-header h3 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.result-body {
+  padding: 1.5rem;
+}
+
+.interaction-desc {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--primary-white);
+}
+
+.alternatives-section {
+  padding: 1.5rem;
+  background: rgba(0, 229, 255, 0.05);
+  border-top: 1px dashed var(--glass-border);
+}
+
+.alternatives-section h4 {
+  color: var(--primary-cyan);
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.alternatives-list {
+  list-style: none;
+  padding: 0;
+}
+
+.alternatives-list li {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+  color: var(--light-gray);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 2px solid var(--primary-cyan);
+}
+
+.bullet-icon {
+  font-size: 1.2rem;
+}
