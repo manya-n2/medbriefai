@@ -532,3 +532,20 @@ body {
   font-size: 1.2rem;
   flex-shrink: 0;
 }
+/* --- 8. ABOUT SECTION --- */
+.about-section {
+  margin: 5rem auto;
+  padding: 3rem;
+  max-width: 800px;
+  text-align: center;
+}
+
+.about-section h2 {
+  color: var(--primary-white);
+  margin-bottom: 1.5rem;
+}
+
+.about-section p {
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
