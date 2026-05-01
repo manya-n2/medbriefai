@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import './Home.css';
 
 const Home = () => {
@@ -221,11 +221,11 @@ const Home = () => {
             { icon: "⚡", title: "Drug Interaction Detection", desc: "Cross-reference medications for safety.", link: "/drug-interactions" },
             { icon: "🚨", title: "Risk Prediction", desc: "Identify high-risk patient indicators automatically.", link: "/risk-prediction" },
           ].map((feature, i) => (
-            <a key={i} href={feature.link} className="feature-card glass hover-elevate clickable-card">
-              <div className="feature-icon">{feature.icon}</div>
-              <h4>{feature.title}</h4>
-              <p>{feature.desc}</p>
-            </a>
+            <Link key={i} to={feature.link} className="feature-card glass hover-elevate clickable-card">
+  <div className="feature-icon">{feature.icon}</div>
+  <h4>{feature.title}</h4>
+  <p>{feature.desc}</p>
+</Link>
           ))}
         </div>
       </section>
