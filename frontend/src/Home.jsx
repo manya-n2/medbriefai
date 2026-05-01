@@ -260,7 +260,7 @@ const Home = () => {
             <span>MedBrief AI</span>
           </div>
           <div className="footer-links">
-            <a href="https://github.com" target="_blank" rel="noreferrer">GitHub Repo</a>
+            <a href="https://github.com/manya-n2/medbriefai" target="_blank" rel="noreferrer">GitHub Repo</a>
             <a href="mailto:contact@example.com">Contact Us</a>
           </div>
         </div>
