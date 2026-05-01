@@ -57,3 +57,22 @@ const Home = () => {
       }
     }, 800);
   };
+  
+   return (
+    <div className="clinical-app">
+      {/* 1. NAVBAR */}
+      <nav className="navbar glass">
+        <div className="nav-brand">
+          <span className="logo-icon">⚕️</span>
+          <span className="app-name">Clinical Note Summarizer</span>
+        </div>
+        <div className="nav-links">
+          <a href="#home">Home</a>
+          <a href="#features">Features</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+          <button className="nav-btn-analyze glow-hover" onClick={() => document.getElementById('analyze').scrollIntoView({ behavior: 'smooth' })}>
+            Analyze
+          </button>
+        </div>
+      </nav>
