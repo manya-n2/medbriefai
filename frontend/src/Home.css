@@ -299,28 +299,43 @@ body {
 
 .action-group {
   display: flex;
+  align-items: center;
   gap: 1rem;
 }
 
+
 .goal-select {
-  flex: 1;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--glass-border);
-  color: var(--primary-white);
-  padding: 0.8rem;
-  border-radius: 8px;
-  font-size: 1rem;
+    flex: 1;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+    color: var(--primary-white);
+
+    padding: 0 0.8rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+
+    height: 50px;
 }
 
 .btn-analyze {
-  flex: 1;
-  background: var(--gradient-main);
-  border: none;
-  color: var(--primary-white);
-  font-size: 1.1rem;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
+    flex: 1;
+
+    height: 50px;
+    padding: 0 1rem;
+
+    background: var(--gradient-main);
+    border: none;
+    border-radius: 8px;
+
+    color: var(--primary-white);
+    font-size: 1rem;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
 }
 /* --- 4. LOADING SECTION --- */
 .loading-section {
