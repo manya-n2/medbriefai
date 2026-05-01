@@ -630,3 +630,15 @@ body {
     text-align: center;
   }
 }
+/* --- CLICKABLE FEATURE CARDS --- */
+.clickable-card {
+  text-decoration: none; /* Removes the underline from the link */
+  color: inherit; /* Keeps your text colors intact */
+  display: block; /* Ensures the whole card area is clickable */
+  cursor: pointer; /* Shows the pointer finger on hover */
+}
+
+/* Optional: Add a subtle inner glow on hover to emphasize it's a button */
+.clickable-card:hover {
+  background: rgba(0, 229, 255, 0.05); /* Slight cyan tint on hover */
+}

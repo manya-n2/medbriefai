@@ -216,20 +216,20 @@ const Home = () => {
         <h2 className="section-title">Platform Features</h2>
         <div className="feature-grid">
           {[
-            { icon: "🧠", title: "Smart Summarization", desc: "Condense long notes into key medical facts." },
-            { icon: "⚡", title: "Drug Interaction Detection", desc: "Cross-reference medications for safety." },
-            { icon: "🚨", title: "Risk Prediction", desc: "Identify high-risk patient indicators automatically." },
-            { icon: "📊", title: "Structured Outputs", desc: "Export data to EHR-friendly formats." },
-            { icon: "📝", title: "Prompt Editing", desc: "Refine AI outputs with custom medical prompts." },
-            { icon: "⏱️", title: "Faster Clinical Review", desc: "Save hours of documentation time per shift." },
-            { icon: "🤖", title: "AI-Powered Agent Workflow", desc: "Multi-step autonomous reasoning for accuracy." },
-            { icon: "🗣️", title: "Medical Language Simplification", desc: "Translate jargon for patient communication." }
+            { icon: "🧠", title: "Smart Summarization", desc: "Condense long notes into key medical facts.", link: "/smart-summarization" },
+            { icon: "⚡", title: "Drug Interaction Detection", desc: "Cross-reference medications for safety.", link: "/drug-interactions" },
+            { icon: "🚨", title: "Risk Prediction", desc: "Identify high-risk patient indicators automatically.", link: "/risk-prediction" },
+            { icon: "📊", title: "Structured Outputs", desc: "Export data to EHR-friendly formats.", link: "/structured-outputs" },
+            { icon: "📝", title: "Prompt Editing", desc: "Refine AI outputs with custom medical prompts.", link: "/prompt-editing" },
+            { icon: "⏱️", title: "Faster Clinical Review", desc: "Save hours of documentation time per shift.", link: "/clinical-review" },
+            { icon: "🤖", title: "AI-Powered Agent Workflow", desc: "Multi-step autonomous reasoning for accuracy.", link: "/agent-workflow" },
+            { icon: "🗣️", title: "Medical Language Simplification", desc: "Translate jargon for patient communication.", link: "/language-simplification" }
           ].map((feature, i) => (
-            <div key={i} className="feature-card glass hover-elevate">
+            <a key={i} href={feature.link} className="feature-card glass hover-elevate clickable-card">
               <div className="feature-icon">{feature.icon}</div>
               <h4>{feature.title}</h4>
               <p>{feature.desc}</p>
-            </div>
+            </a>
           ))}
         </div>
       </section>
