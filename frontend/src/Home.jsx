@@ -65,7 +65,7 @@ const Home = () => {
       <nav className="navbar glass">
         <div className="nav-brand">
           <span className="logo-icon">⚕️</span>
-          <span className="app-name">MetBrief AI</span>
+          <span className="app-name">MedBrief AI</span>
         </div>
         <div className="nav-links">
           <a href="#home">Home</a>
@@ -257,16 +257,15 @@ const Home = () => {
         <div className="footer-content">
           <div className="footer-brand">
             <span className="logo-icon">⚕️</span>
-            <span>Clinical Note Summarizer</span>
+            <span>MedBrief AI</span>
           </div>
           <div className="footer-links">
-            <a href="#home">Quick Links</a>
             <a href="https://github.com" target="_blank" rel="noreferrer">GitHub Repo</a>
             <a href="mailto:contact@example.com">Contact Us</a>
           </div>
         </div>
         <div className="footer-bottom">
-          <p>&copy; 2026 Clinical Note Summarizer. Hackathon Demo.</p>
+          <p>&copy; 2026 MedBrief AI.</p>
         </div>
       </footer>
     </div>
