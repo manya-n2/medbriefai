@@ -143,3 +143,20 @@ const Home = () => {
           </div>
         </div>
       </section>
+      {/* 4. LOADING SECTION */}
+      {isAnalyzing && (
+        <section className="loading-section fade-in">
+          <div className="loader-container">
+            <div className="spinner"></div>
+            <h3>Agentic AI is analyzing clinical notes...</h3>
+            <p className="loading-text">{loadingMessages[loadingStep]}</p>
+            <div className="progress-bar">
+              <div 
+                className="progress-fill" 
+                style={{ width: `${((loadingStep + 1) / loadingMessages.length) * 100}%` }}
+              ></div>
+            </div>
+          </div>
+        </section>
+      )}
+     
