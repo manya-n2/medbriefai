@@ -120,7 +120,7 @@ const Home = () => {
             <label className="upload-area">
               <span className="upload-icon">📄</span>
               <p>Drag & drop or click to upload</p>
-              <small>Accepted formats: PDF, DOCX, TXT</small>
+              <small>Accepted formats: PDF, DOCX</small>
               <input type="file" accept=".pdf,.docx,.txt" onChange={handleFileUpload} hidden />
             </label>
             {uploadedFile && <div className="file-preview">File selected: {uploadedFile}</div>}
@@ -220,11 +220,6 @@ const Home = () => {
             { icon: "🧠", title: "Smart Summarization", desc: "Condense long notes into key medical facts.", link: "/smart-summarization" },
             { icon: "⚡", title: "Drug Interaction Detection", desc: "Cross-reference medications for safety.", link: "/drug-interactions" },
             { icon: "🚨", title: "Risk Prediction", desc: "Identify high-risk patient indicators automatically.", link: "/risk-prediction" },
-            { icon: "📊", title: "Structured Outputs", desc: "Export data to EHR-friendly formats.", link: "/structured-outputs" },
-            { icon: "📝", title: "Prompt Editing", desc: "Refine AI outputs with custom medical prompts.", link: "/prompt-editing" },
-            { icon: "⏱️", title: "Faster Clinical Review", desc: "Save hours of documentation time per shift.", link: "/clinical-review" },
-            { icon: "🤖", title: "AI-Powered Agent Workflow", desc: "Multi-step autonomous reasoning for accuracy.", link: "/agent-workflow" },
-            { icon: "🗣️", title: "Medical Language Simplification", desc: "Translate jargon for patient communication.", link: "/language-simplification" }
           ].map((feature, i) => (
             <a key={i} href={feature.link} className="feature-card glass hover-elevate clickable-card">
               <div className="feature-icon">{feature.icon}</div>
