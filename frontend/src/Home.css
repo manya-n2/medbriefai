@@ -596,3 +596,37 @@ body {
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.5);
 }
+/* --- MEDIA QUERIES --- */
+@media (max-width: 768px) {
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .cta-group {
+    justify-content: center;
+  }
+
+  .nav-links {
+    display: none; /* Add a hamburger menu for full mobile support if desired */
+  }
+
+  .action-group {
+    flex-direction: column;
+  }
+  
+  .timeline::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .timeline-step {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
