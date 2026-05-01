@@ -211,3 +211,15 @@ const Home = () => {
           </div>
         </section>
       )}
+      {/* 7. HOW IT WORKS SECTION */}
+      <section className="workflow-section">
+        <h2 className="section-title">How It Works</h2>
+        <div className="timeline">
+          {["Upload Clinical Note", "AI Extracts Entities", "Agentic Workflow Executes", "Drug Safety Check", "Structured Summary Generated"].map((step, i) => (
+            <div key={i} className="timeline-step glass">
+              <div className="step-number">{i + 1}</div>
+              <p>{step}</p>
+            </div>
+          ))}
+        </div>
+      </section>
