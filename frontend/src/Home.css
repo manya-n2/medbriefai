@@ -1,0 +1,25 @@
+/* --- VARIABLES & RESET --- */
+:root {
+  --primary-deep-blue: #040d21;
+  --primary-cyan: #00E5FF;
+  --primary-white: #FFFFFF;
+  --light-gray: #F3F4F6;
+  --soft-red: #FF4D4D;
+  --text-main: #E2E8F0;
+  --glass-bg: rgba(10, 25, 47, 0.6);
+  --glass-border: rgba(0, 229, 255, 0.15);
+  --gradient-main: linear-gradient(135deg, #00E5FF 0%, #0077FF 100%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  background-color: var(--primary-deep-blue);
+  color: var(--text-main);
+  overflow-x: hidden;
+}
