@@ -232,3 +232,25 @@ const Home = () => {
           By automating the extraction and cross-referencing of vital patient data, we allow medical professionals to focus on what matters most: patient care.
         </p>
       </section>
+      {/* 9. FOOTER */}
+      <footer id="contact" className="footer">
+        <div className="footer-content">
+          <div className="footer-brand">
+            <span className="logo-icon">⚕️</span>
+            <span>Clinical Note Summarizer</span>
+          </div>
+          <div className="footer-links">
+            <a href="#home">Quick Links</a>
+            <a href="https://github.com" target="_blank" rel="noreferrer">GitHub Repo</a>
+            <a href="mailto:contact@example.com">Contact Us</a>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <p>&copy; 2026 Clinical Note Summarizer. Hackathon Demo.</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default Home;
