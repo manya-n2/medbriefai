@@ -57,7 +57,7 @@ const Home = () => {
       }
     }, 800);
   };
-  
+
    return (
     <div className="clinical-app">
       {/* 1. NAVBAR */}
@@ -76,3 +76,29 @@ const Home = () => {
           </button>
         </div>
       </nav>
+      {/* 2. HERO SECTION */}
+      <section id="home" className="hero">
+        <div className="glow-shape shape-1"></div>
+        <div className="glow-shape shape-2"></div>
+        <div className="hero-content">
+          <div className="hero-text">
+            <h1 className="gradient-text">AI-Powered Clinical Note Analysis</h1>
+            <p className="subheading">
+              Convert complex doctor notes into structured summaries, detect medication risks, and identify dangerous drug interactions instantly utilizing autonomous agentic workflows.
+            </p>
+            <div className="cta-group">
+              <button className="btn-primary glow-hover" onClick={() => document.getElementById('analyze').scrollIntoView({ behavior: 'smooth' })}>
+                Analyze Notes
+              </button>
+              <button className="btn-secondary">Learn More</button>
+            </div>
+          </div>
+          <div className="hero-illustration glass">
+            {/* Placeholder for Medical AI Illustration */}
+            <div className="mock-scanner">
+              <div className="scanner-line"></div>
+              <p>Agentic System Ready...</p>
+            </div>
+          </div>
+        </div>
+      </section>
