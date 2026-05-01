@@ -61,7 +61,7 @@ const SmartSummarization = () => {
       <nav className="navbar glass mini-nav">
         <div className="nav-brand">
           <span className="logo-icon">⚕️</span>
-          <span className="app-name">Clinical Note Summarizer</span>
+          <span className="app-name">MedBrief AI</span>
         </div>
 
         {/* ✅ FIXED ROUTING */}
