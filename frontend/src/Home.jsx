@@ -27,3 +27,20 @@ const Home = () => {
     diagnosis: "Acute Exacerbation of COPD",
     insights: "Agentic analysis suggests prioritizing continuous pulse oximetry and considering a nebulized bronchodilator trial before discharge."
   };
+  // Handlers
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setUploadedFile(file.name);
+    }
+  };
+
+  const handleAnalyzeClick = () => {
+    if (!noteText.trim() && !uploadedFile) {
+      alert("Please paste clinical notes or upload a file to begin.");
+      return;
+    }
+
+    setIsAnalyzing(true);
+    setShowResults(false);
+    setLoadingStep(0);
