@@ -6,6 +6,7 @@ import Home from './Home';
 import SmartSummarization from './SmartSummarization';
 import DrugInteractions from "./DrugInteractions";
 import PatientRiskScore from "./PatientRiskScore";
+import Contact from './Contact';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/smart-summarization" element={<SmartSummarization />} />
         <Route path="/drug-interactions" element={<DrugInteractions />} />
         <Route path="/risk-prediction" element={<PatientRiskScore />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </Router>
   );

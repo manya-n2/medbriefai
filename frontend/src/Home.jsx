@@ -261,7 +261,7 @@ const Home = () => {
           </div>
           <div className="footer-links">
             <a href="https://github.com/manya-n2/medbriefai" target="_blank" rel="noreferrer">GitHub Repo</a>
-            <a href="mailto:contact@example.com">Contact Us</a>
+            <Link to="/Contact">Contact Us</Link>
           </div>
         </div>
         <div className="footer-bottom">
