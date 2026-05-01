@@ -245,7 +245,7 @@ const Home = () => {
 
       {/* 8. ABOUT SECTION */}
       <section id="about" className="about-section glass">
-        <h2>About Clinical Note Summarizer</h2>
+        <h2>About MedBrief AI</h2>
         <p>
           Built on a robust Agentic AI architecture, this platform is designed to act as an intelligent healthcare assistant. 
           Our mission is to massively boost doctor productivity while maintaining a strict, safety-focused analysis pipeline. 
