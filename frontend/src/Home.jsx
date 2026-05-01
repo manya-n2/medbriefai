@@ -17,3 +17,13 @@ const Home = () => {
     "Detecting risks...",
     "Finalizing agentic review..."
   ];
+   // Mock Results Data
+  const mockResults = {
+    summary: "Patient presents with acute exacerbation of chronic obstructive pulmonary disease (COPD). Reports increased shortness of breath and productive cough over the last 3 days. Denies chest pain. Vitals indicate mild tachycardia and decreased oxygen saturation.",
+    symptoms: ["Shortness of breath", "Productive cough", "Tachycardia", "Hypoxia"],
+    medications: ["Albuterol 90mcg inhaler", "Prednisone 40mg", "Azithromycin 250mg"],
+    riskLevel: "HIGH",
+    drugInteractions: ["Albuterol + Azithromycin: Monitor for potential QT prolongation."],
+    diagnosis: "Acute Exacerbation of COPD",
+    insights: "Agentic analysis suggests prioritizing continuous pulse oximetry and considering a nebulized bronchodilator trial before discharge."
+  };
