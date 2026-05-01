@@ -1,0 +1,27 @@
+You are a clinical information extraction AI. Extract structured medical information from the clinical note below.
+
+IMPORTANT: Return ONLY a valid JSON object. No explanation, no markdown, no extra text before or after the JSON.
+
+Extract these exact fields:
+{
+  "patient_name": "string or null",
+  "age": "number or null",
+  "gender": "string or null",
+  "symptoms": ["list of symptom strings"],
+  "diagnosis": "string or null",
+  "medications": [
+    {"name": "drug name", "dose": "dosage or null", "frequency": "how often or null"}
+  ],
+  "allergies": ["list of allergy strings"],
+  "vitals": {
+    "bp": "blood pressure or null",
+    "pulse": "pulse rate or null",
+    "temp": "temperature or null",
+    "spo2": "oxygen saturation or null",
+    "rr": "respiratory rate or null"
+  },
+  "notes": "any other relevant clinical information as a string or null"
+}
+
+Clinical Note:
+{clinical_note}

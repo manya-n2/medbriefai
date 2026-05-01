@@ -91,7 +91,7 @@ const Home = () => {
               <button className="btn-primary glow-hover" onClick={() => document.getElementById('analyze').scrollIntoView({ behavior: 'smooth' })}>
                 Analyze Notes
               </button>
-              <button className="btn-secondary">Learn More</button>
+
             </div>
           </div>
           <div className="hero-illustration glass">
