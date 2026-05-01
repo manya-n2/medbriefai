@@ -483,3 +483,52 @@ body {
   color: var(--primary-white);
   margin-bottom: 0.8rem;
 }
+/* --- 7. HOW IT WORKS SECTION --- */
+.workflow-section {
+  padding: 5rem 5%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--glass-border);
+  z-index: 0;
+}
+
+.timeline-step {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.step-number {
+  width: 48px;
+  height: 48px;
+  background: var(--primary-deep-blue);
+  border: 2px solid var(--primary-cyan);
+  color: var(--primary-cyan);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
