@@ -44,3 +44,16 @@ const Home = () => {
     setIsAnalyzing(true);
     setShowResults(false);
     setLoadingStep(0);
+    // Simulate Agentic Workflow Progression
+    let step = 0;
+    const interval = setInterval(() => {
+      step++;
+      if (step < loadingMessages.length) {
+        setLoadingStep(step);
+      } else {
+        clearInterval(interval);
+        setIsAnalyzing(false);
+        setShowResults(true);
+      }
+    }, 800);
+  };
