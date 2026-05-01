@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
 
-const Home = () => {
+const Home = ({ toggleTheme, theme }) => {
   // State Management
   const [noteText, setNoteText] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
@@ -72,6 +72,10 @@ const Home = () => {
           <a href="#features">Features</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
+           {/* 🌙 Theme Toggle */}
+  <button className="theme-toggle" onClick={toggleTheme}>
+    {theme === 'dark' ? '🌙' : '☀️'}
+  </button>
           <button className="nav-btn-analyze glow-hover" onClick={() => document.getElementById('analyze').scrollIntoView({ behavior: 'smooth' })}>
             Analyze
           </button>

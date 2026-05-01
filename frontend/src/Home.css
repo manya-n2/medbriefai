@@ -10,7 +10,18 @@
   --glass-border: rgba(0, 229, 255, 0.15);
   --gradient-main: linear-gradient(135deg, #00E5FF 0%, #0077FF 100%);
 }
+html[data-theme="light"] {
+  --primary-deep-blue: #f5f7fa;
+  --primary-cyan: #0077ff;
+  --primary-white: #111111;
+  --light-gray: #4b5563;
+  --text-main: #1f2937;
 
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(0, 0, 0, 0.1);
+
+  --gradient-main: linear-gradient(135deg, #0077ff 0%, #00c6ff 100%);
+}
 * {
   margin: 0;
   padding: 0;
@@ -566,7 +577,7 @@ body {
 }
 /* --- 9. FOOTER --- */
 .footer {
-  background: #020813;
+  background:var(--primary-deep-blue);
   padding: 3rem 5% 1rem;
   border-top: 1px solid var(--glass-border);
 }
@@ -656,4 +667,11 @@ body {
 /* Optional: Add a subtle inner glow on hover to emphasize it's a button */
 .clickable-card:hover {
   background: rgba(0, 229, 255, 0.05); /* Slight cyan tint on hover */
+}
+.theme-toggle {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: 10px;
 }
