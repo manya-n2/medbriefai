@@ -119,7 +119,7 @@ const Home = () => {
             <label className="upload-area">
               <span className="upload-icon">📄</span>
               <p>Drag & drop or click to upload</p>
-              <small>Accepted formats: PDF, DOCX, TXT</small>
+              <small>Accepted formats: PDF, DOCX</small>
               <input type="file" accept=".pdf,.docx,.txt" onChange={handleFileUpload} hidden />
             </label>
             {uploadedFile && <div className="file-preview">File selected: {uploadedFile}</div>}
