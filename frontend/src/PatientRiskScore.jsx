@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './PatientRiskScore.css';
+import { analyzeNote } from './services/api';
 
 const PatientRiskScore = () => {
   const [clinicalNote, setClinicalNote] = useState('');
@@ -12,39 +13,49 @@ const PatientRiskScore = () => {
     setClinicalNote("Patient is a 65-year-old male presenting with severe chest pain radiating to the left arm. History of chronic hypertension and Type 2 Diabetes. Currently taking Lisinopril, Metformin, and recently started on Ibuprofen for joint pain. Patient appears diaphoretic.");
   };
 
-  const handleCalculate = () => {
-    if (!clinicalNote.trim()) {
-      alert("Please enter a clinical note to analyze.");
-      return;
-    }
+  const handleCalculate = async () => {
+  if (!clinicalNote.trim()) {
+    alert("Please enter a clinical note to analyze.");
+    return;
+  }
+  setIsAnalyzing(true);
+  setResult(null);
 
-    setIsAnalyzing(true);
-    setResult(null);
+  try {
+    const raw = await analyzeNote(clinicalNote, "Risk Detection");
 
-    // Mock AI Analysis Delay
-    setTimeout(() => {
-      setIsAnalyzing(false);
-      
-      // MOCK DATA: Matching your prompt requirements perfectly
-      setResult({
-        score: 78,
-        level: 'HIGH',
-        colorClass: 'risk-high', // corresponds to CSS
-        reasons: [
-          "Severe symptom detected: Chest pain",
-          "Polypharmacy: 3+ active medications",
-          "Potential drug interaction: Lisinopril + Ibuprofen (renal risk)",
-          "High-risk keywords found: 'chronic', 'severe', 'history of'"
-        ],
-        factors: {
-          symptoms: "Severe",
-          medications: 3,
-          age: 65,
-          interactions: 1
-        }
-      });
-    }, 1800);
-  };
+    const risk     = raw.risk_assessment || {};
+    const entities = raw.extracted_entities || {};
+    const level    = (risk.risk_level || "low").toUpperCase();
+
+    const colorMap = { HIGH: "risk-high", MEDIUM: "risk-medium", LOW: "risk-low" };
+    const scoreMap = { HIGH: 78, MEDIUM: 52, LOW: 22 };
+
+    // risks is list[{type, description, severity}] — use description as reasons
+    const reasons = (risk.risks || []).map(
+      (r) => `${r.type}: ${r.description}`
+    );
+
+    setResult({
+      score:      scoreMap[level] ?? 50,
+      level,
+      colorClass: colorMap[level] ?? "risk-low",
+      reasons:    reasons.length > 0 ? reasons : ["No specific risk factors identified."],
+      factors: {
+        symptoms:     entities.symptoms?.length > 0 ? "Detected" : "None",
+        medications:  entities.medications?.length || 0,
+        age:          entities.age ?? "—",
+        interactions: raw.drug_interactions?.interactions_found
+                        ? (raw.drug_interactions.details?.length || 1)
+                        : 0,
+      },
+    });
+  } catch (err) {
+    alert(`Error: ${err.message}`);
+  } finally {
+    setIsAnalyzing(false);
+  }
+};
 
   return (
     <div className="risk-page">

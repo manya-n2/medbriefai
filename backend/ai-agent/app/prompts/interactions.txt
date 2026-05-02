@@ -1,0 +1,41 @@
+You are a clinical pharmacologist. Check drug-drug interactions for this EXACT medication list:
+{med_list}
+
+STRICT RULES:
+1. Only use drug names from the list above — no other drug names allowed
+2. Only return interactions between exactly TWO drugs from the list
+3. Do NOT include single-drug entries
+4. Do NOT invent interactions — only include clinically established ones from standard references
+5. Severity definitions:
+   - critical: life-threatening, absolute contraindication (e.g., Nitroglycerin + Sildenafil)
+   - severe: major organ risk, significant harm likely (e.g., Warfarin + Amiodarone)
+   - moderate: significant clinical effect requiring monitoring or dose adjustment
+   - mild: minor effect, usually does not require intervention
+6. Return maximum 5 interactions, sorted by severity (critical first)
+7. Give a specific pharmacological mechanism — not a generic statement
+8. If no real clinically established interactions exist between the listed drugs, return an empty array
+
+Known interaction patterns to check (only if BOTH drugs appear in the input list):
+- Warfarin + any NSAID (Ibuprofen, Naproxen, Diclofenac) → severe bleeding risk
+- Warfarin + Amiodarone → severe (Amiodarone inhibits CYP2C9, increasing Warfarin levels and INR)
+- Warfarin + Fluconazole → severe (CYP2C9 inhibition)
+- ACE inhibitor (Ramipril, Lisinopril, Enalapril) + potassium-sparing diuretic (Spironolactone) → moderate hyperkalemia
+- Metformin + NSAID (Ibuprofen, Naproxen) → moderate (NSAIDs reduce renal blood flow, impairing Metformin clearance, lactic acidosis risk)
+- Aspirin + Ibuprofen → moderate (Ibuprofen competes for COX-1 binding, blunting Aspirin's antiplatelet effect)
+- Aspirin + Clopidogrel → moderate but expected therapy in ACS (dual antiplatelet — monitor bleeding)
+- Nitroglycerin + PDE5 inhibitor (Sildenafil, Tadalafil) → critical severe hypotension
+- SSRI + NSAID → moderate (increased GI bleeding risk via platelet inhibition)
+- Digoxin + Amiodarone → severe (Amiodarone increases Digoxin plasma levels)
+
+Return ONLY a valid JSON array. No explanation, no markdown, no text before or after:
+[
+  {
+    "drugs": ["ExactDrugName1", "ExactDrugName2"],
+    "severity": "critical|severe|moderate|mild",
+    "mechanism": "specific pharmacological mechanism (e.g., CYP enzyme inhibition, receptor competition)",
+    "clinical_significance": "what happens clinically to the patient",
+    "recommendation": "specific actionable recommendation for the prescribing doctor"
+  }
+]
+
+If no real interactions exist between the listed drugs, return exactly: []

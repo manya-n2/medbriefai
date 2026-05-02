@@ -5,7 +5,8 @@ import './Contact.css';
 const Contact = () => {
   return (
     <div className="clinical-app">
-      {/* 1. NAVBAR */}
+      
+      {/* NAVBAR */}
       <nav className="navbar glass">
         <div className="nav-brand">
           <span className="logo-icon">⚕️</span>
@@ -19,25 +20,23 @@ const Contact = () => {
         </div>
       </nav>
 
-      {/* 2. CONTACT HERO */}
+      {/* HERO */}
       <section className="contact-hero">
         <div className="glow-shape shape-1"></div>
         <div className="glow-shape shape-2"></div>
         <div className="hero-text fade-in">
           <h1 className="gradient-text">Get in Touch</h1>
           <p className="subheading">
-            Have questions about our Agentic AI workflow or integration? 
             Reach out to us directly.
           </p>
         </div>
       </section>
 
-      {/* 3. CONTACT CONTENT */}
+      {/* CONTACT INFO */}
       <section className="contact-container">
         <div className="contact-grid">
+          <div className="contact-info">
 
-          {/* Contact Info Only */}
-          <div className="contact-info center-card">
             <div className="info-card glass hover-elevate">
               <div className="icon">📧</div>
               <h4>Email</h4>
@@ -49,12 +48,12 @@ const Contact = () => {
               <h4>Contact Number</h4>
               <p>+91 98765 43210</p>
             </div>
-          </div>
 
+          </div>
         </div>
       </section>
 
-      {/* 4. FOOTER */}
+      {/* FOOTER */}
       <footer className="footer">
         <div className="footer-bottom">
           <p>&copy; 2026 MedBrief AI.</p>

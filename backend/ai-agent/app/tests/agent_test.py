@@ -527,3 +527,149 @@ class TestAPIPrompts:
     def test_update_prompt_with_whitespace_only(self, client):
         r = client.put("/prompts/planner", json={"content": "   "})
         assert r.status_code == 422
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PDF UPLOAD TESTS
+# ══════════════════════════════════════════════════════════════════════════════
+
+class TestPDFExtractor:
+    """Unit tests for PDF text extraction utility."""
+
+    def test_rejects_empty_bytes(self):
+        from app.utils.pdf_extractor import extract_text_from_pdf
+        with pytest.raises((ValueError, Exception)):
+            extract_text_from_pdf(b"")
+
+    def test_rejects_non_pdf_bytes(self):
+        from app.utils.pdf_extractor import extract_text_from_pdf
+        with pytest.raises(Exception):
+            extract_text_from_pdf(b"this is not a pdf file at all")
+
+    def test_size_validation_passes_small_file(self):
+        from app.utils.pdf_extractor import validate_pdf_size
+        small = b"x" * 100
+        validate_pdf_size(small, max_mb=10.0)
+
+    def test_size_validation_rejects_large_file(self):
+        from app.utils.pdf_extractor import validate_pdf_size
+        large = b"x" * (11 * 1024 * 1024)
+        with pytest.raises(ValueError, match="too large"):
+            validate_pdf_size(large, max_mb=10.0)
+
+    def test_extracts_text_from_valid_pdf(self):
+        """Create a minimal valid PDF in memory and test extraction."""
+        import fitz
+        doc = fitz.open()
+        page = doc.new_page()
+        page.insert_text((72, 72), "Patient: John Doe, 58M. Diagnosis: Hypertension. Meds: Aspirin 81mg daily.")
+        pdf_bytes = doc.tobytes()
+        doc.close()
+
+        from app.utils.pdf_extractor import extract_text_from_pdf
+        text = extract_text_from_pdf(pdf_bytes)
+        assert "John Doe" in text
+        assert "Hypertension" in text
+        assert len(text) > 20
+
+
+class TestAPIPDF:
+    """API tests for PDF upload endpoints."""
+
+    def _make_pdf_bytes(self, text: str) -> bytes:
+        """Helper: create a minimal PDF with given text."""
+        import fitz
+        doc = fitz.open()
+        page = doc.new_page()
+        page.insert_text((72, 72), text)
+        pdf_bytes = doc.tobytes()
+        doc.close()
+        return pdf_bytes
+
+    def test_extract_pdf_text_endpoint_returns_200(self, client):
+        pdf_bytes = self._make_pdf_bytes(
+            "Patient John Doe, 58-year-old male. Diagnosis: Unstable angina. Meds: Aspirin 81mg."
+        )
+        r = client.post(
+            "/extract/pdf-text",
+            files={"file": ("test_note.pdf", pdf_bytes, "application/pdf")},
+        )
+        assert r.status_code == 200
+
+    def test_extract_pdf_text_returns_correct_fields(self, client):
+        pdf_bytes = self._make_pdf_bytes(
+            "Patient Jane Smith, 45F. Chest pain. Medications: Metoprolol 50mg twice daily."
+        )
+        r = client.post(
+            "/extract/pdf-text",
+            files={"file": ("note.pdf", pdf_bytes, "application/pdf")},
+        )
+        data = r.json()
+        assert "extracted_text" in data
+        assert "character_count" in data
+        assert "word_count" in data
+        assert "ready_for_analysis" in data
+
+    def test_extract_pdf_text_contains_patient_info(self, client):
+        pdf_bytes = self._make_pdf_bytes(
+            "Patient Jane Smith, 45F. Diagnosis: Hypertensive crisis."
+        )
+        r = client.post(
+            "/extract/pdf-text",
+            files={"file": ("note.pdf", pdf_bytes, "application/pdf")},
+        )
+        assert "Jane Smith" in r.json()["extracted_text"]
+
+    def test_extract_pdf_rejects_non_pdf(self, client):
+        r = client.post(
+            "/extract/pdf-text",
+            files={"file": ("note.txt", b"This is plain text", "text/plain")},
+        )
+        assert r.status_code == 415
+
+    def test_extract_pdf_rejects_oversized_file(self, client):
+        large_bytes = b"x" * (11 * 1024 * 1024)
+        r = client.post(
+            "/extract/pdf-text",
+            files={"file": ("large.pdf", large_bytes, "application/pdf")},
+        )
+        assert r.status_code == 422
+
+    @patch("app.agent.controller.planner.generate_plan")
+    @patch("app.agent.controller.executor.execute_plan")
+    @patch("app.agent.controller.memory.persist_result")
+    @patch("app.agent.controller.memory.get_session_memory")
+    def test_analyze_pdf_returns_200(self, mock_mem, mock_persist, mock_exec, mock_plan, client):
+        mock_plan.return_value = [{"step": 1, "tool": "extract_entities", "reason": "test"}]
+        mock_exec.return_value = ["extract_entities", "summarize", "check_interactions", "detect_risks"]
+        mock_mem.return_value = {
+            "extract_entities": SAMPLE_EXTRACTED,
+            "summarize": "PATIENT OVERVIEW:\nJane Smith, 45F",
+            "check_interactions": SAMPLE_INTERACTIONS,
+            "detect_risks": SAMPLE_RISKS,
+        }
+        mock_persist.return_value = None
+
+        import fitz
+        doc = fitz.open()
+        page = doc.new_page()
+        page.insert_text((72, 72), SAMPLE_NOTE)
+        pdf_bytes = doc.tobytes()
+        doc.close()
+
+        r = client.post(
+            "/analyze/pdf",
+            files={"file": ("clinical_note.pdf", pdf_bytes, "application/pdf")},
+            data={"goal": "full analysis"},
+        )
+        assert r.status_code == 200
+        data = r.json()
+        assert data["success"] is True
+        assert "session_id" in data
+
+    def test_analyze_pdf_rejects_non_pdf(self, client):
+        r = client.post(
+            "/analyze/pdf",
+            files={"file": ("note.txt", b"plain text file", "text/plain")},
+            data={"goal": "full analysis"},
+        )
+        assert r.status_code == 415
