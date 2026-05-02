@@ -13,7 +13,7 @@ from app.tools import check_interactions as interaction_tool
 from app.tools import detect_risks as risk_tool
 from app.tools import extract_entities as extract_tool
 from app.tools import summarize as summary_tool
-from app.agent.memory import load_prompt
+
 
 
 logger = get_logger("main")
