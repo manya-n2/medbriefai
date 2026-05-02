@@ -102,11 +102,10 @@ Frontend:
 * npm install
 * npm run dev
 
-### Run with Docker (Recommended)
-* docker compose up --build
-After setup:
-* Frontend runs on 
-* Backend docs available 
+##  Run with Docker
+docker compose up --build
+Frontend: http://localhost:3000  
+Backend: http://localhost:8000/docs
 
 ## Test Cases
 * Short clinical notes are summarized correctly
