@@ -1,5 +1,5 @@
 // frontend/src/services/api.js
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = " https://medbriefai-backend1.onrender.com";
 
 /**
  * Analyze a clinical note (text)
