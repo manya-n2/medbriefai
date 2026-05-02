@@ -201,3 +201,20 @@ body {
     font-size: 0.9rem;
     opacity: 0.6;
 }
+.contact-grid {
+  display: flex;
+  justify-content: center;   /* center horizontally */
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: row;       /* force side-by-side */
+  gap: 2.5rem;               /* spacing between boxes */
+}
+
+.info-card {
+  width: 340px;              /* bigger cards */
+  padding: 2.5rem;
+  text-align: center;
+  border-radius: 18px;
+}
