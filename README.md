@@ -1,4 +1,4 @@
-# MedBrief AI — Clinical Note Intelligence System
+# MedBrief AI - Clinical Note Intelligence System
 
 ## Problem Statement
 Users often deal with long, unstructured clinical notes or medical reports, making it difficult to quickly identify key information such as symptoms, medications, risks, and possible drug interactions.
