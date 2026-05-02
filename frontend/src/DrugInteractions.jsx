@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './DrugInteractions.css';
+import { analyzeNote } from './services/api';
 
 const DrugInteractions = () => {
   const [currentDrug, setCurrentDrug] = useState('');
@@ -25,56 +26,57 @@ const DrugInteractions = () => {
   };
 
   // Simulate AI Analysis
-  const handleAnalyze = () => {
-    if (medications.length < 2) {
-      alert("Please add at least two medications to check for interactions.");
-      return;
-    }
+ const handleAnalyze = async () => {
+  if (medications.length < 2) {
+    alert("Please add at least two medications to check for interactions.");
+    return;
+  }
+  setIsAnalyzing(true);
+  setResults(null);
 
-    setIsAnalyzing(true);
-    setResults(null);
+  // Build a minimal note the backend can parse
+  const syntheticNote =
+    `Patient is currently taking the following medications: ${medications.join(", ")}.`;
 
-    // MOCK AI LOGIC FOR HACKATHON DEMO
-    setTimeout(() => {
-      setIsAnalyzing(false);
-      
-      const medsLower = medications.map(m => m.toLowerCase());
-      
-      // Scenario 1: Known dangerous interaction
-      if (medsLower.some(m => m.includes('warfarin')) && medsLower.some(m => m.includes('aspirin'))) {
-        setResults({
-          status: 'DANGER',
-          title: 'Major Interaction Detected',
-          description: 'The combination of Warfarin and Aspirin significantly increases the risk of severe gastrointestinal bleeding. Both medications affect blood clotting mechanisms through different pathways.',
-          alternatives: [
-            "Consider switching Aspirin to Acetaminophen for pain relief, which does not interfere with platelet aggregation.",
-            "If dual therapy is absolutely required, strict INR monitoring and gastroprotection (e.g., PPI) must be initiated."
-          ]
-        });
-      } 
-      // Scenario 2: Moderate warning
-      else if (medsLower.some(m => m.includes('albuterol')) && medsLower.some(m => m.includes('azithromycin'))) {
-        setResults({
-          status: 'WARNING',
-          title: 'Moderate Risk: Monitor Patient',
-          description: 'Using Albuterol with Azithromycin may increase the risk of an irregular heart rhythm (QT prolongation).',
-          alternatives: [
-            "Monitor ECG for QT interval changes if patient has underlying cardiac conditions.",
-            "Consider alternative antibiotics like Amoxicillin or Cefdinir if appropriate for the infection."
-          ]
-        });
-      }
-      // Scenario 3: Safe combination
-      else {
-        setResults({
-          status: 'SAFE',
-          title: 'No Known Interactions',
-          description: `The AI agent found no known significant pharmacological interactions between the ${medications.length} medications listed.`,
-          alternatives: []
-        });
-      }
-    }, 1500);
-  };
+  try {
+    const raw = await analyzeNote(syntheticNote, "Detect Drug Interactions");
+    const di = raw.drug_interactions || {};
+
+    // overall_safety from backend: "safe" | "caution" | "unsafe"
+    const safetyMap = { safe: "SAFE", caution: "WARNING", unsafe: "DANGER" };
+    const status = di.interactions_found
+      ? safetyMap[di.overall_safety] || "WARNING"
+      : "SAFE";
+
+    const titleMap = {
+      SAFE:    "No Known Interactions",
+      WARNING: "Moderate Risk: Monitor Patient",
+      DANGER:  "Major Interaction Detected",
+    };
+
+    // details is list[{drugs, severity, description}]
+    const description = di.interactions_found
+      ? (di.details || [])
+          .map((d) => {
+            const pair = Array.isArray(d.drugs) ? d.drugs.join(" + ") : "";
+            return `${pair}${d.severity ? ` [${d.severity}]` : ""}${d.description ? `: ${d.description}` : ""}`;
+          })
+          .join("\n")
+      : `No significant interactions found between: ${medications.join(", ")}.`;
+
+    // Use top-level recommendation + per-interaction descriptions as alternatives
+    const alternatives = [
+      di.recommendation,
+      ...(di.details || []).map((d) => d.description).filter(Boolean),
+    ].filter(Boolean);
+
+    setResults({ status, title: titleMap[status], description, alternatives });
+  } catch (err) {
+    alert(`Error: ${err.message}`);
+  } finally {
+    setIsAnalyzing(false);
+  }
+};
 
   return (
     <div className="interactions-page">

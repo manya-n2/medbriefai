@@ -642,3 +642,15 @@ body {
 .clickable-card:hover {
   background: rgba(0, 229, 255, 0.05); /* Slight cyan tint on hover */
 }
+
+/* --- DRAG & DROP ACTIVE STATE --- */
+.upload-area {
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.upload-area.dragging {
+  border-color: var(--primary-cyan);
+  background: rgba(0, 229, 255, 0.08);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+}

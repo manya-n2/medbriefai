@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './SmartSummarization.css';
+import { analyzeNote, analyzePdf } from './services/api';
 
 const SmartSummarization = () => {
   const [inputText, setInputText] = useState('');
@@ -39,20 +40,56 @@ const SmartSummarization = () => {
   };
 
   // Generate Summary
-  const handleGenerateSummary = () => {
-    if (!inputText && !uploadedFile) {
-      alert("Please enter text or upload a file.");
-      return;
+  const handleGenerateSummary = async () => {
+  if (!inputText.trim() && !uploadedFile) {
+    alert("Please enter text or upload a file.");
+    return;
+  }
+  setIsProcessing(true);
+  setResults(null);
+
+  try {
+    let raw;
+    if (uploadedFile instanceof File) {
+      raw = await analyzePdf(uploadedFile, "Generate Summary");
+    } else {
+      raw = await analyzeNote(inputText, "Generate Summary");
     }
 
-    setIsProcessing(true);
-    setResults(null);
+    const entities = raw.extracted_entities || {};
+    const meds = (entities.medications || []).map((m) => ({
+      name:      m.name      || "Unknown",
+      dosage:    m.dose      || "—",
+      frequency: m.frequency || "—",
+      purpose:   "—",          // backend doesn't return purpose; leave as placeholder
+    }));
 
-    setTimeout(() => {
-      setIsProcessing(false);
-      setResults(mockAIResponse);
-    }, 2000);
-  };
+    // risks is list[{type, description, severity}]
+    const criticalInstructions = (raw.risk_assessment?.risks || []).map(
+      (r) => `[${r.severity?.toUpperCase() || 'INFO'}] ${r.type}: ${r.description}`
+    );
+
+    const levelToScore = { low: 96, medium: 78, high: 55, unknown: 70 };
+    const level = raw.risk_assessment?.risk_level || "unknown";
+
+    setResults({
+      patientCondition: entities.diagnosis || "See summary below",
+      simplifiedSummary: raw.summary || "—",
+      medications: meds,
+      criticalInstructions:
+        criticalInstructions.length > 0
+          ? criticalInstructions
+          : ["No critical instructions detected."],
+      confidenceScore: levelToScore[level] ?? 70,
+    });
+  } catch (err) {
+    alert(`Error: ${err.message}`);
+  } finally {
+    setIsProcessing(false);
+  }
+};
+
+ 
 
   return (
     <div className="summarization-page">
