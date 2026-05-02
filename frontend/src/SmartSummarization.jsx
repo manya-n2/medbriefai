@@ -98,7 +98,7 @@ const SmartSummarization = () => {
       <nav className="navbar glass mini-nav">
         <div className="nav-brand">
           <span className="logo-icon">⚕️</span>
-          <span className="app-name">Clinical Note Summarizer</span>
+          <span className="app-name">MedBrief AI</span>
         </div>
 
         {/* ✅ FIXED ROUTING */}
@@ -136,11 +136,11 @@ const SmartSummarization = () => {
               <span className="upload-icon">📄</span>
               <div className="upload-text">
                 <strong>Upload File</strong>
-                <p>PDF, JPG, PNG</p>
+                <p>PDF</p>
               </div>
               <input
                 type="file"
-                accept="image/*,.pdf"
+                accept=".pdf"
                 onChange={handleFileUpload}
                 hidden
               />

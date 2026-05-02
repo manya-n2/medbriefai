@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom';
 import './Home.css';
 import { analyzeNote, analyzePdf } from './services/api';
 
-const Home = () => {
-  const [noteText,     setNoteText]     = useState('');
+const Home = ({ toggleTheme, theme }) => {
+  // State Management
+  const [noteText, setNoteText] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
-  const [isDragging,   setIsDragging]   = useState(false);
-  const [isAnalyzing,  setIsAnalyzing]  = useState(false);
-  const [loadingStep,  setLoadingStep]  = useState(0);
-  const [showResults,  setShowResults]  = useState(false);
-  const [apiResult,    setApiResult]    = useState(null);
-  const [error,        setError]        = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [loadingStep, setLoadingStep] = useState(0);
+  const [showResults, setShowResults] = useState(false);
+  const [apiResult, setApiResult] = useState(null);
+  const [error, setError] = useState(null);
 
   const loadingMessages = [
     "Extracting entities...",
@@ -64,7 +65,9 @@ const Home = () => {
     let step = 0;
     const interval = setInterval(() => {
       step++;
-      if (step < loadingMessages.length) setLoadingStep(step);
+      if (step < loadingMessages.length) {
+        setLoadingStep(step);
+      }
     }, 800);
 
     try {
@@ -88,7 +91,7 @@ const Home = () => {
 
   const severityColor = (sev) => {
     switch ((sev || '').toLowerCase()) {
-      case 'critical': return '#FF4D4D';
+      case 'critical':
       case 'severe':   return '#FF4D4D';
       case 'high':     return '#FF7043';
       case 'moderate': return '#FFC107';
@@ -119,7 +122,7 @@ const Home = () => {
   const getDiagnosis = (result) => {
     if (!result) return '—';
     const d = result.extracted_entities?.diagnosis;
-    if (d && d.trim() && d.trim() !== 'null') return d.trim();
+    if (d && d.trim() && d.trim().toLowerCase() !== 'null') return d.trim();
     const summary = result.summary || '';
     const match = summary.match(/DIAGNOSIS:\s*\n?([^\n]+)/i);
     if (match && match[1].trim()) return match[1].trim();
@@ -135,15 +138,19 @@ const Home = () => {
       <nav className="navbar glass">
         <div className="nav-brand">
           <span className="logo-icon">⚕️</span>
-          <span className="app-name">Clinical Note Summarizer</span>
+          <span className="app-name">MedBrief AI</span>
         </div>
         <div className="nav-links">
           <a href="#home">Home</a>
           <a href="#features">Features</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
-          <button
-            className="nav-btn-analyze glow-hover"
+          {/* 🌙 Theme Toggle */}
+          <button className="theme-toggle" onClick={toggleTheme}>
+            {theme === 'dark' ? '🌙' : '☀️'}
+          </button>
+          <button 
+            className="nav-btn-analyze glow-hover" 
             onClick={() => document.getElementById('analyze').scrollIntoView({ behavior: 'smooth' })}
           >
             Analyze
@@ -226,7 +233,6 @@ const Home = () => {
             )}
           </div>
 
-          {/* SINGLE ANALYZE BUTTON — no dropdown */}
           <div className="action-group" style={{ justifyContent: 'center' }}>
             <button
               className="btn-analyze glow-hover"
@@ -439,7 +445,7 @@ const Home = () => {
         <h2 className="section-title">Platform Features</h2>
         <div className="feature-grid">
           {[
-            { icon: "🧠", title: "Smart Summarization",       desc: "Condense long notes into key medical facts.",           link: "/smart-summarization" },
+            { icon: "🧠", title: "Smart Summarization",      desc: "Condense long notes into key medical facts.",          link: "/smart-summarization" },
             { icon: "⚡", title: "Drug Interaction Detection", desc: "Cross-reference medications for safety.",               link: "/drug-interactions"   },
             { icon: "🚨", title: "Risk Prediction",            desc: "Identify high-risk patient indicators automatically.",  link: "/risk-prediction"     },
           ].map((feature, i) => (
@@ -473,7 +479,7 @@ const Home = () => {
 
       {/* 8. ABOUT */}
       <section id="about" className="about-section glass">
-        <h2>About Clinical Note Summarizer</h2>
+        <h2>About MedBrief AI</h2>
         <p>
           Built on a robust Agentic AI architecture, this platform is designed to act as an intelligent healthcare assistant.
           Our mission is to massively boost doctor productivity while maintaining a strict, safety-focused analysis pipeline.
@@ -486,16 +492,15 @@ const Home = () => {
         <div className="footer-content">
           <div className="footer-brand">
             <span className="logo-icon">⚕️</span>
-            <span>Clinical Note Summarizer</span>
+            <span>MedBrief AI</span>
           </div>
           <div className="footer-links">
-            <a href="#home">Quick Links</a>
-            <a href="https://github.com" target="_blank" rel="noreferrer">GitHub Repo</a>
-            <a href="mailto:contact@example.com">Contact Us</a>
+            <a href="https://github.com/manya-n2/medbriefai" target="_blank" rel="noreferrer">GitHub Repo</a>
+            <Link to="/Contact">Contact Us</Link>
           </div>
         </div>
         <div className="footer-bottom">
-          <p>&copy; 2026 Clinical Note Summarizer. Hackathon Demo.</p>
+          <p>&copy; 2026 MedBrief AI.</p>
         </div>
       </footer>
 

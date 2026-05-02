@@ -66,3 +66,4 @@ export async function updatePrompt(name, content) {
   }
   return response.json();
 }
+

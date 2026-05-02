@@ -15,6 +15,7 @@ from app.tools import extract_entities as extract_tool
 from app.tools import summarize as summary_tool
 from app.agent.memory import load_prompt
 
+
 logger = get_logger("main")
 
 app = FastAPI(
@@ -39,8 +40,8 @@ All prompts are editable at runtime via `GET/PUT /prompts/{name}`.
 Available prompt names: `planner`, `extract`, `summary`, `risk`, `interactions`, `interactions_assessment`
     """,
     version="1.0.0",
-    contact={"name": "Team Synaptic", "email": "team@example.com"},
-    license_info={"name": "MIT"},
+    contact={"name": "Team Synaptiq"},
+    
 )
 
 # CORS — allow all origins for hackathon (restrict in production)
@@ -534,6 +535,7 @@ def _build_score_breakdown(extracted: dict, interactions: dict, risk: dict) -> d
         factors.append({"factor": "Drug interactions", "value": f"{n} found", "weight": "significant"})
 
     return {"factors": factors}
+
 
 
 @app.exception_handler(Exception)
