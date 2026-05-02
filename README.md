@@ -107,7 +107,6 @@ docker compose up --build
 
 Frontend: http://localhost:3000  
 Backend API: http://localhost:8000  
-API Docs (Swagger): http://localhost:8000/docs
 
 ## Test Cases
 * Short clinical notes are summarized correctly
