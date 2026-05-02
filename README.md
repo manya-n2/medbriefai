@@ -115,11 +115,11 @@ Backend: http://localhost:8000/docs
 
 ## Demo Video
 
-* Add your demo video link here
+* https://youtu.be/AhepfgjP66o
 
 ## Live Deployment
 
-* Add deployed link here
+* https://medbriefai-veersa.vercel.app/
 
 ## Design Approach
 * Clean and minimal clinical dashboard
