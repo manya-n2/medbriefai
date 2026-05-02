@@ -46,7 +46,7 @@ const Contact = () => {
             <div className="info-card glass hover-elevate">
               <div className="icon">📞</div>
               <h4>Contact Number</h4>
-              <p>+91 98765 43210</p>
+              <p>+91 1234567890</p>
             </div>
 
           </div>
