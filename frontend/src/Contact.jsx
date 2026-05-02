@@ -1,12 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Contact.css';
 
 const Contact = () => {
-  // Handler for form submission (optional logic)
-  const handleSubmit = (e) => {
+  // 1. State Management for Form Fields
+  const [formData, setFormData] = useState({
+    full_name: '',
+    email: '',
+    subject: 'General Inquiry',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // 2. Handle Input Changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // 3. Form Submission Handler
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Message sent! (This is a demo)");
+    setIsSubmitting(true);
+
+    try {
+      // Calling your FastAPI backend endpoint
+      const response = await fetch('http://localhost:8000/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert("Success! Your message has been saved to the database.");
+        // Reset form after success
+        setFormData({
+          full_name: '',
+          email: '',
+          subject: 'General Inquiry',
+          message: ''
+        });
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to send: ${errorData.detail || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error("Connection Error:", error);
+      alert("Could not connect to the server. Is the FastAPI backend running?");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -18,7 +66,6 @@ const Contact = () => {
           <span className="app-name">MedBrief AI</span>
         </div>
         <div className="nav-links">
-          {/* Use Link to navigate back to Home without refreshing */}
           <Link to="/">Home</Link>
           <a href="/#features">Features</a>
           <a href="/#about">About</a>
@@ -68,31 +115,60 @@ const Contact = () => {
               <div className="input-row">
                 <div className="input-group">
                   <label>Full Name</label>
-                  <input type="text" placeholder="XYZ" required />
+                  <input 
+                    type="text" 
+                    name="full_name"
+                    value={formData.full_name}
+                    onChange={handleChange}
+                    placeholder="Enter your name" 
+                    required 
+                  />
                 </div>
                 <div className="input-group">
                   <label>Work Email</label>
-                  <input type="email" placeholder="xyz@example.com" required />
+                  <input 
+                    type="email" 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="xyz@example.com" 
+                    required 
+                  />
                 </div>
               </div>
 
               <div className="input-group">
                 <label>Subject</label>
-                <select className="goal-select">
-                  <option>General Inquiry</option>
-                  <option>Technical Support</option>
-                  <option>Partnership/API Access</option>
-                  <option>Feedback</option>
+                <select 
+                  className="goal-select"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                >
+                  <option value="General Inquiry">General Inquiry</option>
+                  <option value="Technical Support">Technical Support</option>
+                  <option value="Partnership/API Access">Partnership/API Access</option>
+                  <option value="Feedback">Feedback</option>
                 </select>
               </div>
 
               <div className="input-group">
                 <label>Message</label>
-                <textarea placeholder="How can we assist you today?"></textarea>
+                <textarea 
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="How can we assist you today?"
+                  required
+                ></textarea>
               </div>
 
-              <button type="submit" className="btn-primary glow-hover">
-                Send Message
+              <button 
+                type="submit" 
+                className="btn-primary glow-hover"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Sending..." : "Send Message"}
               </button>
             </form>
           </div>

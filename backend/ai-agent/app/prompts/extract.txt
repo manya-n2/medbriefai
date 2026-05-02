@@ -2,25 +2,32 @@ You are a clinical information extraction AI. Extract structured medical informa
 
 IMPORTANT: Return ONLY a valid JSON object. No explanation, no markdown, no extra text before or after the JSON.
 
+EXTRACTION RULES:
+1. "diagnosis" — Extract the PRIMARY diagnosis or suspected diagnosis. Look for: explicit diagnosis statements, "suspected X", "possible X", "rule out X", doctor assessment. If multiple, pick the most severe/primary one. NEVER leave this null if a condition is mentioned.
+2. "symptoms" — Extract individual symptoms as short clean strings. "Chest pain for 5 hours" → keep as-is for clinical accuracy.
+3. "vitals" — Use EXACTLY these keys: bp, pulse, temp, spo2, rr. Preserve units in values (e.g. "160/100 mmHg", "110 bpm", "99.5°F", "93%", "24 breaths/min").
+4. "medications" — Each medication gets name, dose, frequency. Parse carefully from prescription shorthand.
+5. "age" — Must be a number (integer), not a string.
+
 Extract these exact fields:
 {
   "patient_name": "string or null",
-  "age": "number or null",
+  "age": number or null,
   "gender": "string or null",
   "symptoms": ["list of symptom strings"],
-  "diagnosis": "string or null",
+  "diagnosis": "string — PRIMARY diagnosis or suspected diagnosis, never null if any condition mentioned",
   "medications": [
     {"name": "drug name", "dose": "dosage or null", "frequency": "how often or null"}
   ],
   "allergies": ["list of allergy strings"],
   "vitals": {
-    "bp": "blood pressure or null",
-    "pulse": "pulse rate or null",
-    "temp": "temperature or null",
-    "spo2": "oxygen saturation or null",
-    "rr": "respiratory rate or null"
+    "bp": "blood pressure value with units or null",
+    "pulse": "heart rate value with units or null",
+    "temp": "temperature value with units or null",
+    "spo2": "oxygen saturation value with % or null",
+    "rr": "respiratory rate value with units or null"
   },
-  "notes": "any other relevant clinical information as a string or null"
+  "notes": "any other relevant clinical information — doctor observations, ECG notes, clinical flags — as a string or null"
 }
 
 Clinical Note:
