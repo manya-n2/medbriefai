@@ -1,6 +1,12 @@
 import sys
 import os
 
+
+print("Python:", sys.version)
+print("Working dir:", os.getcwd())
+print("Files here:", os.listdir("."))
+print("App folder:", os.listdir("app") if os.path.exists("app") else "NOT FOUND")
+
 # Ensure the project root is on the Python path regardless of working directory
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
