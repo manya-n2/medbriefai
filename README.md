@@ -105,10 +105,8 @@ Frontend:
 ### Run with Docker (Recommended)
 * docker compose up --build
 After setup:
-* Frontend runs on [http://localhost:3000](http://localhost:3000)
-* Backend docs available on [http://localhost:8000/docs](http://localhost:8000/docs)
-
----
+* Frontend runs on 
+* Backend docs available 
 
 ## Test Cases
 * Short clinical notes are summarized correctly
