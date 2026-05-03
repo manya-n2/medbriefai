@@ -250,8 +250,8 @@ medbriefai/
 
 ## 👩‍💻 Team
 
-| Name | Role |
-|------|------|
+| Name 
+|------
 | **Manya Nigam**
 | **Muskan Khatoon**
 | **Anushka Goel** 
