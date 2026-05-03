@@ -12,24 +12,6 @@
 
 ---
 
-## 📋 Table of Contents
-
-- [Overview](#-overview)
-- [The Problem](#-the-problem)
-- [Our Solution](#-our-solution)
-- [Features](#-features)
-- [Architecture](#-architecture)
-- [Agent Workflow](#-agent-workflow)
-- [Tech Stack](#-tech-stack)
-- [API Reference](#-api-reference)
-- [Setup & Installation](#-setup--installation)
-- [Environment Variables](#-environment-variables)
-- [Running with Docker](#-running-with-docker)
-- [Project Structure](#-project-structure)
-- [Team](#-team)
-
----
-
 ## 🔍 Overview
 
 MedBrief AI is an **agent-based AI system** designed to reduce the cognitive burden on healthcare professionals. It takes long, unstructured clinical notes or medical reports and converts them into concise, structured outputs — complete with risk scores, drug interaction alerts, and extracted medical entities — all stored persistently in **MongoDB Atlas**.
