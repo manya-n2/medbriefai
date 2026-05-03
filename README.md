@@ -159,7 +159,7 @@ Input (Text / PDF)
 | **Drug Data** | RxNorm API (NIH) |
 | **Database** | MongoDB Atlas |
 | **DevOps** | Docker, Docker Compose |
-| **Deployment** | Vercel (frontend), Render / Railway (backend) |
+| **Deployment** | Vercel (frontend), Render (backend) |
 
 ---
 
