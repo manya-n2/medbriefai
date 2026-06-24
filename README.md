@@ -143,7 +143,7 @@ Backend API: http://localhost:8000
 * https://youtu.be/AhepfgjP66o
 ---
 ## Live Deployment
-* https://medbriefai-veersa.vercel.app/
+* https://medbriefai-seven.vercel.app/
 ---
 ## Design Approach
 * Clean and minimal clinical dashboard
