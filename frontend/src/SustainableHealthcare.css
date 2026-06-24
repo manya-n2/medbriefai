@@ -1,0 +1,137 @@
+/* Relies on variables defined in Home.css */
+
+.sustainability-page {
+  min-height: 100vh;
+  background-color: var(--primary-deep-blue);
+  color: var(--text-main);
+  padding-bottom: 4rem;
+}
+
+.sustainability-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 5%;
+}
+
+.sustainability-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sustainability-header h1 {
+  color: var(--primary-white);
+  margin-bottom: 0.5rem;
+}
+
+.sustainability-header p {
+  color: var(--light-gray);
+  font-size: 1rem;
+}
+
+/* Metrics Cards */
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.metric-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.8rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(12px);
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary-cyan);
+  box-shadow: 0 0 20px rgba(0,229,255,0.15);
+}
+
+.metric-card h2 {
+  color: var(--primary-cyan);
+  font-size: 2rem;
+  margin-bottom: 0.8rem;
+}
+
+.metric-card p {
+  color: var(--light-gray);
+  font-size: 0.95rem;
+}
+
+/* Impact Section */
+
+.impact-section {
+  margin-top: 2rem;
+}
+
+.impact-section h3 {
+  color: var(--primary-cyan);
+  margin-bottom: 1.5rem;
+}
+
+.impact-list {
+  list-style: none;
+  padding: 0;
+}
+
+.impact-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+
+  background: rgba(0,229,255,0.05);
+  border-left: 3px solid var(--primary-cyan);
+
+  padding: 1rem;
+  margin-bottom: 1rem;
+
+  border-radius: 4px 10px 10px 4px;
+
+  color: var(--primary-white);
+  line-height: 1.6;
+}
+
+.impact-icon {
+  font-size: 1.2rem;
+}
+
+/* SDG Card */
+
+.sdg-card {
+  margin-top: 3rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.sdg-card h3 {
+  color: var(--primary-cyan);
+  margin-bottom: 1rem;
+}
+
+.sdg-card p {
+  color: var(--light-gray);
+  line-height: 1.7;
+}
+
+/* Responsive */
+
+@media (max-width:768px){
+
+  .metrics-grid{
+    grid-template-columns:1fr;
+  }
+
+  .metric-card h2{
+    font-size:1.8rem;
+  }
+
+}

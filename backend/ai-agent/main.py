@@ -1,49 +1,25 @@
-import sys
-import os
-
-
-print("Python:", sys.version)
-print("Working dir:", os.getcwd())
-print("Files here:", os.listdir("."))
-print("App folder:", os.listdir("app") if os.path.exists("app") else "NOT FOUND")
-
-# Ensure the project root is on the Python path regardless of working directory
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
-from fastapi import FastAPI, HTTPException, UploadFile, File, Form
+from fastapi import FastAPI, HTTPException,UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+#manually sending jsonresponse
 from pydantic import BaseModel
+from app.schema.request_schema import AnalyzeRequest
+from app.schema.response_schema import AgentResponse
+from app.agent.controller import run_agent
+from app.agent.memory import load_prompt, save_prompt_override
+from app.utils.constraints import validate_clinical_note, validate_goal
+from app.utils.logger import get_logger
+from app.utils.pdf_extractor import extract_text_from_pdf, validate_pdf_size
+from app.tools import check_interactions as interaction_tool
+from app.tools import detect_risks as risk_tool
+from app.tools import extract_entities as extract_tool
+from app.tools import summarize as summary_tool
+from app.agent.memory import load_prompt
+from app.sustainability_router import router as sustainability_router
 
-# ---------------------------------------------------------------------------
-# Lazy / safe imports — give a clear error if a module is missing
-# ---------------------------------------------------------------------------
-try:
-    from app.schema.request_schema import AnalyzeRequest
-    from app.schema.response_schema import AgentResponse
-    from app.agent.controller import run_agent
-    from app.agent.memory import load_prompt, save_prompt_override
-    from app.utils.constraints import validate_clinical_note, validate_goal
-    from app.utils.logger import get_logger
-    from app.utils.pdf_extractor import extract_text_from_pdf, validate_pdf_size
-    from app.tools import check_interactions as interaction_tool
-    from app.tools import detect_risks as risk_tool
-    from app.tools import extract_entities as extract_tool
-    from app.tools import summarize as summary_tool
-except ImportError as e:
-    import traceback
-    print("=" * 60)
-    print("IMPORT ERROR — check your project structure and dependencies")
-    print(str(e))
-    traceback.print_exc()
-    print("=" * 60)
-    raise
 
 logger = get_logger("main")
 
-# ---------------------------------------------------------------------------
-# App
-# ---------------------------------------------------------------------------
 app = FastAPI(
     title="Clinical Note Summarizer — AI Agent",
     description="""
@@ -68,7 +44,7 @@ Available prompt names: `planner`, `extract`, `summary`, `risk`, `interactions`,
     version="1.0.0",
     contact={"name": "Team Synaptiq"},
 )
-
+app.include_router(sustainability_router)
 # ---------------------------------------------------------------------------
 # CORS
 # ---------------------------------------------------------------------------
@@ -80,9 +56,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ---------------------------------------------------------------------------
-# Health
-# ---------------------------------------------------------------------------
 
 @app.get("/", tags=["Health"])
 def root():
@@ -99,10 +72,6 @@ def root():
 def health():
     return {"status": "ok", "service": "clinical-note-agent", "version": "1.0.0"}
 
-
-# ---------------------------------------------------------------------------
-# Analyze
-# ---------------------------------------------------------------------------
 
 @app.post(
     "/analyze",

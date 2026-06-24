@@ -2,8 +2,12 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
 import { analyzeNote, analyzePdf } from './services/api';
-
-const Home = ({ toggleTheme, theme }) => {
+const Home = ({
+    toggleTheme,
+    theme,
+    setLatestAnalysis,
+    setLatestNote
+}) => {
   // State Management
   const [noteText, setNoteText] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
@@ -77,6 +81,8 @@ const Home = ({ toggleTheme, theme }) => {
       } else {
         result = await analyzeNote(noteText, "full analysis");
       }
+      setLatestAnalysis(result);
+      setLatestNote(noteText);
       setApiResult(result);
       setShowResults(true);
     } catch (err) {
@@ -448,6 +454,12 @@ const Home = ({ toggleTheme, theme }) => {
             { icon: "🧠", title: "Smart Summarization",      desc: "Condense long notes into key medical facts.",          link: "/smart-summarization" },
             { icon: "⚡", title: "Drug Interaction Detection", desc: "Cross-reference medications for safety.",               link: "/drug-interactions"   },
             { icon: "🚨", title: "Risk Prediction",            desc: "Identify high-risk patient indicators automatically.",  link: "/risk-prediction"     },
+            {
+  icon: "♻️",
+  title: "Sustainable Healthcare",
+  desc: "Reduce medical waste and optimize healthcare resources through AI-driven clinical intelligence.",
+  link: "/sustainable-healthcare"
+},
           ].map((feature, i) => (
             <Link key={i} to={feature.link} className="feature-card glass hover-elevate clickable-card">
               <div className="feature-icon">{feature.icon}</div>
