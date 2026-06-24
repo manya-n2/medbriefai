@@ -2,8 +2,12 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
 import { analyzeNote, analyzePdf } from './services/api';
-
-const Home = ({ toggleTheme, theme }) => {
+const Home = ({
+    toggleTheme,
+    theme,
+    setLatestAnalysis,
+    setLatestNote
+}) => {
   // State Management
   const [noteText, setNoteText] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
@@ -77,6 +81,8 @@ const Home = ({ toggleTheme, theme }) => {
       } else {
         result = await analyzeNote(noteText, "full analysis");
       }
+      setLatestAnalysis(result);
+      setLatestNote(noteText);
       setApiResult(result);
       setShowResults(true);
     } catch (err) {

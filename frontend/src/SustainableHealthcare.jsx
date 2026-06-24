@@ -1,41 +1,31 @@
 import "./SustainableHealthcare.css";
-import { useState } from "react";
 
-export default function SustainableHealthcare() {
+export default function SustainableHealthcare({
+    apiResult,
+    noteText
+}) {
 
-    const [note, setNote] = useState("");
-    const [metrics, setMetrics] = useState(null);
+    const reportsSummarized =
+        apiResult ? 1 : 0;
 
-    const fetchMetrics = async () => {
+    const pagesSaved =
+        apiResult
+        ? Math.max(
+            1,
+            Math.ceil(noteText.length / 2500)
+        )
+        : 0;
 
-        try {
+    const duplicateTestsAvoided =
+        apiResult?.drug_interactions?.interactions_found
+            ? apiResult.drug_interactions.details.length
+            : 0;
 
-            const response = await fetch(
-                "http://localhost:8000/sustainability/metrics",
-                {
-                    method: "POST",
+    const drugInteractionsDetected =
+        apiResult?.drug_interactions?.details?.length || 0;
 
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        clinical_note: note
-                    })
-                }
-            );
-
-            const data = await response.json();
-
-            setMetrics(data);
-
-        } catch (err) {
-
-            console.error(err);
-
-        }
-
-    };
+    const co2Reduction =
+        (pagesSaved * 0.005).toFixed(2);
 
     return (
 
@@ -43,60 +33,38 @@ export default function SustainableHealthcare() {
 
             <h1>♻ Sustainable Healthcare Dashboard</h1>
 
-            <textarea
-                className="medical-textarea"
-                rows="10"
-                placeholder="Paste clinical note..."
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-            />
+            <div className="card-grid">
 
-            <button
-                className="btn-analyze"
-                onClick={fetchMetrics}
-            >
-                Generate Sustainability Metrics
-            </button>
-
-            {
-                metrics &&
-
-                <div className="card-grid">
-
-                    <div className="card">
-                        <h2>{metrics.reports_summarized}</h2>
-                        <p>Reports Summarized</p>
-                    </div>
-
-                    <div className="card">
-                        <h2>{metrics.pages_saved}</h2>
-                        <p>Pages Saved</p>
-                    </div>
-
-                    <div className="card">
-                        <h2>{metrics.duplicate_tests_avoided}</h2>
-                        <p>Duplicate Tests Avoided</p>
-                    </div>
-
-                    <div className="card">
-                        <h2>{metrics.drug_interactions_detected}</h2>
-                        <p>Drug Interactions Detected</p>
-                    </div>
-
-                    <div className="card">
-                        <h2>{metrics.co2_reduction}</h2>
-                        <p>Estimated CO₂ Reduction</p>
-                    </div>
-
+                <div className="card">
+                    <h2>{reportsSummarized}</h2>
+                    <p>Reports Summarized</p>
                 </div>
 
-            }
+                <div className="card">
+                    <h2>{pagesSaved}</h2>
+                    <p>Pages Saved</p>
+                </div>
+
+                <div className="card">
+                    <h2>{duplicateTestsAvoided}</h2>
+                    <p>Duplicate Tests Avoided</p>
+                </div>
+
+                <div className="card">
+                    <h2>{drugInteractionsDetected}</h2>
+                    <p>Drug Interactions Detected</p>
+                </div>
+
+                <div className="card">
+                    <h2>{co2Reduction} kg</h2>
+                    <p>Estimated CO₂ Reduction</p>
+                </div>
+
+            </div>
 
             <div className="impact-section">
 
-                <h2>
-                    How MedBrief AI Supports Sustainability
-                </h2>
+                <h2>How MedBrief AI Supports Sustainability</h2>
 
                 <ul>
 
