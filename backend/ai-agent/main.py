@@ -1,13 +1,22 @@
+#import section
 from fastapi import FastAPI, HTTPException,UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+#manually sending jsonresponse
 from pydantic import BaseModel
+#checks whether request body is correct or not
 from app.schema.request_schema import AnalyzeRequest
+#app.schema is  a file and we need request_schema class
+#analyze request-> pydantic -> converts json to object and checks
 from app.schema.response_schema import AgentResponse
+#agentresponse is a pydantic for output
 from app.agent.controller import run_agent
 from app.agent.memory import load_prompt, save_prompt_override
+#2 functiond called
 from app.utils.constraints import validate_clinical_note, validate_goal
+#validtae-> empty? invalid? etc
 from app.utils.logger import get_logger
+#record everything
 from app.utils.pdf_extractor import extract_text_from_pdf, validate_pdf_size
 from app.tools import check_interactions as interaction_tool
 from app.tools import detect_risks as risk_tool
@@ -17,7 +26,7 @@ from app.agent.memory import load_prompt
 
 
 logger = get_logger("main")
-
+#app creation
 app = FastAPI(
     title="Clinical Note Summarizer — AI Agent",
     description="""
@@ -53,7 +62,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
+#health endpoints
 @app.get("/", tags=["Health"])
 def root():
     return {
@@ -69,7 +78,7 @@ def root():
 def health():
     return {"status": "ok", "service": "clinical-note-agent", "version": "1.0.0"}
 
-
+#main ai endpoints
 @app.post(
     "/analyze",
     response_model=AgentResponse,
