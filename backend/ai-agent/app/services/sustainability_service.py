@@ -1,13 +1,28 @@
 # app/services/sustainability_service.py
 
-def get_sustainability_metrics():
-    reports_summarized = 120
-    pages_saved = reports_summarized * 7
-    duplicate_tests_avoided = 18
-    drug_interactions_detected = 24
+def get_sustainability_metrics(
+        clinical_note: str,
+        interaction_count: int,
+        interactions_found: bool
+):
 
-    # Approximate: 1 page ≈ 5g CO₂
-    co2_reduction = round((pages_saved * 5) / 1000, 2)
+    reports_summarized = 1
+
+    pages_saved = max(
+        1,
+        (len(clinical_note) + 2499) // 2500
+    )
+
+    duplicate_tests_avoided = (
+        interaction_count if interactions_found else 0
+    )
+
+    drug_interactions_detected = interaction_count
+
+    co2_reduction = round(
+        pages_saved * 0.005,
+        2
+    )
 
     return {
         "reports_summarized": reports_summarized,

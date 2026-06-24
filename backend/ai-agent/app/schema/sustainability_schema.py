@@ -3,6 +3,10 @@
 from pydantic import BaseModel
 
 
+class SustainabilityRequest(BaseModel):
+    clinical_note: str
+
+
 class SustainabilityResponse(BaseModel):
     reports_summarized: int
     pages_saved: int

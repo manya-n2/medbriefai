@@ -10,6 +10,8 @@ import SustainableHealthcare from './SustainableHealthcare';
 
 function App() {
   const [theme, setTheme] = useState('dark');
+  const [latestAnalysis, setLatestAnalysis] = useState(null);
+  const [latestNote, setLatestNote] = useState("");
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -27,14 +29,22 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home toggleTheme={toggleTheme} theme={theme} />} />
+        <Route path="/" element={<Home
+    toggleTheme={toggleTheme}
+    theme={theme}
+    setLatestAnalysis={setLatestAnalysis}
+    setLatestNote={setLatestNote}
+/>} />
         <Route path="/smart-summarization" element={<SmartSummarization />} />
         <Route path="/drug-interactions" element={<DrugInteractions />} />
         <Route path="/risk-prediction" element={<PatientRiskScore />} />
         <Route path="/contact" element={<Contact />} />
         <Route
   path="/sustainable-healthcare"
-  element={<SustainableHealthcare />}
+  element={<SustainableHealthcare
+    apiResult={latestAnalysis}
+    noteText={latestNote}
+/>}
 />
       </Routes>
     </Router>
