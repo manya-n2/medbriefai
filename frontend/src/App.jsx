@@ -6,6 +6,7 @@ import SmartSummarization from './SmartSummarization';
 import DrugInteractions from "./DrugInteractions";
 import PatientRiskScore from "./PatientRiskScore";
 import Contact from './Contact';
+import SustainableHealthcare from './SustainableHealthcare';
 
 function App() {
   const [theme, setTheme] = useState('dark');
@@ -31,6 +32,10 @@ function App() {
         <Route path="/drug-interactions" element={<DrugInteractions />} />
         <Route path="/risk-prediction" element={<PatientRiskScore />} />
         <Route path="/contact" element={<Contact />} />
+        <Route
+  path="/sustainable-healthcare"
+  element={<SustainableHealthcare />}
+/>
       </Routes>
     </Router>
   );
