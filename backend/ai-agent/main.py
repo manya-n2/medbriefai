@@ -15,6 +15,7 @@ from app.tools import detect_risks as risk_tool
 from app.tools import extract_entities as extract_tool
 from app.tools import summarize as summary_tool
 from app.agent.memory import load_prompt
+from app.sustainability_router import router as sustainability_router
 
 
 logger = get_logger("main")
@@ -43,7 +44,7 @@ Available prompt names: `planner`, `extract`, `summary`, `risk`, `interactions`,
     version="1.0.0",
     contact={"name": "Team Synaptiq"},
 )
-
+app.include_router(sustainability_router)
 # ---------------------------------------------------------------------------
 # CORS
 # ---------------------------------------------------------------------------
